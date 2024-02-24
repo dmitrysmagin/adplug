@@ -16,6 +16,7 @@ src_libadplug_la_SOURCES = \
 	src/fmopl.c \
 	src/nukedopl.c \
 	src/a2m.cpp \
+	src/a2m-v2.cpp \
 	src/adl.cpp \
 	src/adplug.cpp \
 	src/adtrack.cpp \
@@ -102,6 +103,7 @@ pkginclude_HEADERS = \
 	src/opl.h \
 	src/diskopl.h \
 	src/a2m.h \
+	src/a2m-v2.h \
 	src/amd.h \
 	src/bam.h \
 	src/d00.h \
