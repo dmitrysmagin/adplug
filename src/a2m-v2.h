@@ -1,20 +1,31 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
  * Copyright (C) 1999 - 2008 Simon Peter, <dn.tlp@gmx.net>, et al.
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * a2m-v2.cpp - Adlib Tracker II Player by Dmitry Smagin <dmitry.s.smagin@gmail.com>
+ *              Originally by Stanislav Baranec <subz3ro.altair@gmail.com>
+ *
+ * NOTES:
+ * This player loads a2m and a2t modules version 1, 4, 5, 8 and 9 - 14 inclusively.
+ * The code is adapted directly from FreePascal sources of the Adlib Tracker II
+ *
+ * REFERENCES:
+ * https://github.com/ijsf/at2
+ * http://www.adlibtracker.net/
  *
  */
 
@@ -835,9 +846,6 @@ private:
     int a2m_read_patterns(char *src);
     bool a2m_import(char *tune);
     bool a2_import(char *tune);
-
-    void a2t_init(int freq);
-    void a2t_shut();
 };
 
 #endif

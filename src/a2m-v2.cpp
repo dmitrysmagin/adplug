@@ -16,6 +16,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
+ * a2m-v2.cpp - Adlib Tracker II Player by Dmitry Smagin <dmitry.s.smagin@gmail.com>
+ *              Originally by Stanislav Baranec <subz3ro.altair@gmail.com>
+ *
+ * NOTES:
+ * This player loads a2m and a2t modules version 1, 4, 5, 8 and 9 - 14 inclusively.
+ * The code is adapted directly from FreePascal sources of the Adlib Tracker II
+ *
+ * REFERENCES:
+ * https://github.com/ijsf/at2
+ * http://www.adlibtracker.net/
+ *
  */
 
 #include "a2m-v2.h"
@@ -990,7 +1001,7 @@ void Ca2mv2Player::output_note(uint8_t note, uint8_t ins, int chan, bool restart
         if (restart_adsr) {
             key_on(chan);
         } else {
-            //printf("restart_adsr=false\n");
+            AdPlug_LogWrite("restart_adsr == false in output_note()\n");
         }
 
         ch->freq_table[chan] |= 0x2000;
@@ -1085,7 +1096,7 @@ void Ca2mv2Player::update_effect_table(int slot, int chan, int eff_group, uint8_
         ch->effect_table[slot][chan].val = lval;
     } else {
         // x00 without any previous compatible command, should never happen
-        printf("\nERROR: x00 without any previous compatible command\n");
+        AdPlug_LogWrite("x00 without any previous compatible command\n");
         ch->effect_table[slot][chan].def = 0;
         ch->effect_table[slot][chan].val = 0;
     }
@@ -1127,7 +1138,7 @@ void Ca2mv2Player::process_effects(tADTRACK2_EVENT *event, int slot, int chan)
         if ((event->eff[slot ^ 1].def == ef_Extended) &&
             (event->eff[slot ^ 1].val == ef_ex_ExtendedCmd * 16 + ef_ex_cmd_ForceBpmSld)) {
 
-            printf("\n ef_GlobalFSlideUp or ef_GlobalFSlideDown with ef_ex_cmd_ForceBpmSld\n");
+            AdPlug_LogWrite("ef_GlobalFSlideUp or ef_GlobalFSlideDown with ef_ex_cmd_ForceBpmSld\n");
 
             if (def == ef_GlobalFSlideUp) {
                 update_playback_speed(val);
@@ -3851,15 +3862,4 @@ bool Ca2mv2Player::a2_import(char *tune)
     }
 
     return FALSE;
-}
-
-void Ca2mv2Player::a2t_init(int freq)
-{
-    opl->init();
-}
-
-void Ca2mv2Player::a2t_shut()
-{
-    patterns_free();
-    opl->init();
 }
