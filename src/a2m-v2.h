@@ -598,6 +598,7 @@ private:
     void opl2out(uint16_t reg, uint16_t data);
     void opl3out(uint16_t reg, uint8_t data);
     void opl3exp(uint16_t data);
+    uint16_t calc_vibrato_shift(uint8_t depth, uint8_t position);
     void change_freq(int chan, uint16_t freq);
     bool is_chan_adsr_data_empty(int chan);
     bool is_ins_adsr_data_empty(int ins);

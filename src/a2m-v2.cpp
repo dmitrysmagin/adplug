@@ -596,16 +596,12 @@ static uint16_t calc_freq_shift_down(uint16_t freq, uint16_t shift)
     return (uint16_t)((oc << 10) | fr);
 }
 
-/* == calc_vibtrem_shift() in AT2 */
-static uint16_t calc_vibrato_shift(uint8_t depth, uint8_t position)
+uint16_t Ca2mv2Player::calc_vibrato_shift(uint8_t depth, uint8_t position)
 {
-    uint8_t vibr[32] = {
-        0,24,49,74,97,120,141,161,180,197,212,224,235,244,250,253,255,
-        253,250,244,235,224,212,197,180,161,141,120,97,74,49,24
-    };
-
-    /* ATTENTION: wtf this calculation should be ? */
-    return (vibr[position & 0x1f] * depth) >> 6;
+    /* Deduced from asm in AT2 */
+    uint16_t X = (uint16_t)depth * vibtrem_table[position & (vibtrem_table_size - 1)];
+    uint16_t rotated = (X << 1) | (X >> 15);
+    uint16_t result  = ((rotated >> 8) & 0xFF) | ((rotated & 1) << 8);
 }
 
 void Ca2mv2Player::change_freq(int chan, uint16_t freq)
